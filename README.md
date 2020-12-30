@@ -214,6 +214,7 @@ slackに通知が送られます。
 
 ### mysqlへのアクセスの方法  
 複数方法があります。  
+パスワードは`Tatooine`です。`env`ディレクトリにデータベースのパスワードを定義しているので、パスワードを変更する場合はそこを変更してください。  
 #### dockerコンテナに入ってからアクセス(そのホストPC限定)  
 `docker exec -it io_database /bin/bash`  
 `mysql -u root`  
