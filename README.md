@@ -220,6 +220,10 @@ slackに通知が送られます。
 #### ホストPCのターミナルから直接アクセス(そのホストPC限定)  
 `mysql -u root -h dockerコンテナのIPアドレス -p`
 
+### 命名の由来  
+このシステムの名前はU.N.I.O.N.です。これは複数カ所の入退室システムを一つにするシステムであり、今よりもこのサークルが融和し、団結してほしいという想いからこの名前にしました。  
+また、このシステムの正式名称は「i know U eNter It Or Not system (私はあなたが部屋に入ってるか入ってないか知ってるゾ システム)」
+
 ### 謝辞    
 入退室管理システムを発案、構築して下さった先輩方    
 入退室管理システムをGUIに対応させてくれた同期
@@ -243,8 +247,6 @@ slackに通知が送られます。
 [How to setup and use USB/IP](https://developer.ridgerun.com/wiki/index.php?title=How_to_setup_and_use_USB/IP)
 
 [主キー駆動設計](https://qiita.com/wanko5296/items/a96bdeccc250f7c18cee)  
-
-[MySQL 5.7の透過的データ暗号化](https://qiita.com/hmatsu47/items/476d446887244de17ae4)
 
 
 #### NFC関係  
