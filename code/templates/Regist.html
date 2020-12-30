@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, ”user-scalable=no”">
+    <title>DTK I/O</title>
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="/static/Regist.css?q=1422350274">
+</head>
+<body>
+    <div class="header">
+        <h1>DTK  I / O</h1>
+    </div>
+    <div class="main">
+        <form method="post" action="/regist">
+            <input class="textbox" type="text" name="regist" id="registed_text" autocomplete="off">
+            <!-- 下のボタンが押されたらflaskに"room-a"という文字列が渡される -->
+            <button class="button-right" type="submit" name="room" id="room" value="room-a" onclick="return js_alert('room-a');">ROOM A</button>
+            <!-- 下のボタンが押されたらflaskに"room-b"という文字列が渡される -->
+            <button class="button-left" type="submit" name="room" id="room" value="room-b" onclick="return js_alert('room-b');">ROOM B</button>
+        </form>
+    </div>
+</body>
+</html>
+
+<script>
+    function js_alert(temp) {
+        var input_message = document.getElementById("registed_text").value;
+        if(input_message!="reset"){
+            alert("カード(スマホ)が準備できたら下の「OK」もしくは「閉じる」をクリックして、スキャンしてね");
+        }else{
+            if(temp=="room-a"){
+                var checked=confirm("ROOM Aの強制退室を実行しますか?");
+            }else{
+                var checked=confirm("ROOM Bの強制退室を実行しますか?");
+            }
+            if (checked == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+</script>

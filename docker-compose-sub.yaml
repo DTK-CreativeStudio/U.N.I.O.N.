@@ -1,0 +1,15 @@
+version: '3'
+services:
+  io_python2: #地下室の入退室管理システム
+    build: ./python
+    image: python:3.9.1
+    container_name: "io_python2"
+    volumes:
+      - ./code:/code
+    env_file: 
+      - env/python.env
+    # command: python /code/main.py room-b usb:002:004
+    command: python /code/main.py room-b usb
+    restart: always
+    devices:
+      - "/dev/bus/usb:/dev/bus/usb"

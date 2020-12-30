@@ -1,0 +1,47 @@
+version: '3'
+services:
+  mysql:  #データベースのコンテナ
+    image: mysql:5.7
+    container_name: "io_database"
+    restart: always
+    hostname: io
+    environment:
+      BIND-ADDRESS: 0.0.0.0
+    ports:
+      - 3306:3306
+    env_file: 
+      - env/mysql.env
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+
+  io_python1: #部室の入退室管理システム
+    build: ./python
+    image: python:3.9.1
+    container_name: "io_python1"
+    volumes:
+      - ./code:/code
+    env_file: 
+      - env/python.env
+    depends_on:
+      - mysql
+    #command: python /code/main.py room-a usb:002:003
+    command: python /code/main.py room-a usb
+    restart: always
+    devices:
+      - "/dev/bus/usb:/dev/bus/usb"
+
+  regist_python:  #カードの登録システム
+    build: ./python
+    image: python:3.9.1
+    container_name: "regist_python"
+    ports:
+      - 5000:5000
+    volumes:
+      - ./code:/code
+    env_file: 
+      - env/python.env
+    depends_on:
+      - mysql
+    command: python /code/ui.py
+    restart: always

@@ -1,0 +1,6 @@
+mysqlclient
+pysnooper
+requests
+pymysql
+nfcpy
+flask

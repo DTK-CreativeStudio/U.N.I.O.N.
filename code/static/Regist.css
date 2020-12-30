@@ -1,0 +1,239 @@
+@charset "utf-8";
+
+* {
+    box-sizing: border-box;
+}
+
+@media (min-width: 670px) {
+    html, body {
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        background-color: #000000;
+        font-family: 'Arial', sans-serif;
+    }
+    
+    .header{
+        position: relative;
+        margin-top:15%;
+    }
+
+    .header h1 {
+        color: #fc702f;
+        text-align: center;
+        font-size: 80px;
+    }
+    
+    .main {
+        display: inline;
+        position: relative;
+        text-align: center;
+    }
+    
+    .textbox {
+        background: #111111;
+        width: 500px;
+        padding: 20px;
+        margin-top:5%;
+        border: solid 2px #fc702f;
+        text-align: center;
+        border-radius: 60px;
+        font-size: 20px;
+        font-weight :bold;
+        color: #f19d75;
+        outline: none;
+    }
+
+    .button-right {
+        position: relative;
+        display: inline-block;
+        margin: 10% 0 0 0;
+        padding: 20px 20px;
+        background: #111111;
+        color: #fc702f;
+        border: solid 2px #fc702f;
+        border-radius: 60px 0 0 60px;
+        font-size: 21px;
+        font-weight: bold;
+        outline: none;
+    }
+    
+    .button-right:hover {
+        background: #fc702f;
+        color:#222222;
+    }
+    .button-left {
+        position: relative;
+        display: inline-block;
+        margin: 10% 0 0 0;
+        padding: 20px 20px;
+        background: #111111;
+        color: #fc702f;
+        border: solid 2px #fc702f;
+        border-radius: 0 60px 60px 0;
+        font-size: 21px;
+        font-weight: bold;
+        outline: none;
+    }
+    
+    .button-left:hover {
+        background: #fc702f;
+        color:#222222;
+    }
+}
+
+@media (max-width: 670px) {
+
+    html, body {
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        background-color: #ffffff;
+        font-family: 'Arial', sans-serif;
+    }
+    /* ダークモードの時 */
+    @media (prefers-color-scheme: dark) {
+        html, body {
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-color: #000000;
+            font-family: 'Arial', sans-serif;
+        }
+    }
+
+    .header{
+        position: relative;
+        margin-top:15%;
+    }
+
+    .header h1 {
+        color: #fc702f;
+        text-align: center;
+        font-size: 60px;
+    }
+    .main {
+        display: inline;
+        position: relative;
+        text-align: center;
+    }
+    
+    .textbox {
+        background: #e7e7e7;
+        width: 80%;
+        padding: 5%;
+        margin:5%;
+        border: solid 2px #fc702f;
+        text-align:center;
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight :bold;
+        color: #f56a2a;
+        outline: none;
+    }
+    .button-right {
+        position: relative;
+        display: inline-block;
+        margin: 10% 2% 0 0;
+        padding: 5% 8% 5%;
+        background: #ffffff;
+        color: #fc702f;
+        border: solid 2px #fc702f;
+        border-radius: 60px 60px;
+        font-size: 16px;
+        font-weight: bold;
+        outline: none;
+    }
+    /* ダークモードの時 */
+    @media (prefers-color-scheme: dark) {
+        .textbox {
+            background: #111111;
+            width: 80%;
+            padding: 5%;
+            margin:5%;
+            border: solid 2px #fc702f;
+            text-align:center;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight :bold;
+            color: #f19d75;
+            outline: none;
+        }
+        .button-right {
+            position: relative;
+            display: inline-block;
+            margin: 10% 2% 0 0;
+            padding: 5% 8% 5%;
+            background: #111111;
+            color: #fc702f;
+            border: solid 2px #fc702f;
+            border-radius: 60px 60px;
+            font-size: 16px;
+            font-weight: bold;
+            outline: none;
+        }
+    }
+    
+    .button-right:hover {
+        background: #fc702f;
+        color:#e7e7e7;
+    }
+    .button-left {
+        position: relative;
+        display: inline-block;
+        margin: 10% 0 0 2%;
+        padding: 5% 8% 5%;
+        background: #ffffff;
+        color: #fc702f;
+        border: solid 2px #fc702f;
+        border-radius: 60px 60px;
+        font-size: 16px;
+        font-weight: bold;
+        outline: none;
+    }
+    
+    .button-left:hover {
+        background: #fc702f;
+        color:#e7e7e7;
+    }
+    /* ダークモードの時 */
+    @media (prefers-color-scheme: dark) {
+        .button-right {
+            position: relative;
+            display: inline-block;
+            margin: 10% 2% 0 0;
+            padding: 5% 8% 5%;
+            background: #111111;
+            color: #fc702f;
+            border: solid 2px #fc702f;
+            border-radius: 60px 60px;
+            font-size: 16px;
+            font-weight: bold;
+            outline: none;
+        }
+        
+        .button-right:hover {
+            background: #fc702f;
+            color:#222222;
+        }
+        .button-left {
+            position: relative;
+            display: inline-block;
+            margin: 10% 0 0 2%;
+            padding: 5% 8% 5%;
+            background: #111111;
+            color: #fc702f;
+            border: solid 2px #fc702f;
+            /* border-radius: 0 60px 60px 0; */
+            border-radius: 60px 60px;
+            font-size: 16px;
+            font-weight: bold;
+            outline: none;
+        }
+        
+        .button-left:hover {
+            background: #fc702f;
+            color:#222222;
+        }
+    }
+}

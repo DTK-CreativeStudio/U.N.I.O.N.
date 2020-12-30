@@ -1,0 +1,4 @@
+code/__pycache__/
+code/legacy/
+.DS_Store
+docker-compose-hub1.yaml
