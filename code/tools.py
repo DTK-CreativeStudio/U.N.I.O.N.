@@ -76,7 +76,6 @@ except OSError:
     update_sql(f"update utila_tb set flag='1'")
 #ROOM B用------------------------------------------
 except:
-    #時々データベースのIPアドレスがIP_ADDRESS1でないときがあるのでそれの回避策
     DATABASE_IP=os.environ['IP_ADDRESS3']
     update_sql(f"update utilb_tb set flag='1'")
 
