@@ -53,21 +53,22 @@ def regist():
         #入力されたニックネームをここで取得
         nickname=request.form['regist']
 
+        num_before=update_sql(f"select count(*) from student_tb where NICKNAME ='{nickname}'")['count(*)']
+
         # 強制退室======================================================================--------------
         # room aの強制退室
         if request.form['regist'] == "reset" and request.form['room'] == "room-a":
             message_leaving('STATUS_A')
-            return render_template('Result.html', result="R E S E T", message1='ROOM A')
+            return render_template('Result.html', result="R E S E T", message1='部　室')
 
         # room bの強制退室
         elif request.form['regist'] == "reset" and request.form['room'] == "room-b":
             message_leaving('STATUS_B')
-            return render_template('Result.html', result="R E S E T", message1='ROOM B')
+            return render_template('Result.html', result="R E S E T", message1='地下室')
 
 
         # nicknameが空でなく、ニックネームがその時点で他の人に登録されていなかった時============================
-        if nickname!="" and \
-            update_sql(f"select count(*) from student_tb where NICKNAME='{nickname}'")['count(*)']==0:
+        if nickname!="":
             result=show_result(nickname, room)
         else:
             result='failure'
@@ -75,10 +76,11 @@ def regist():
 
         # 学生証を一度登録したことがあるひとがニックネームを変えた時=====================================-----
         if result == "success":
-            #本名取得
-            name=update_sql(f"select * from student_tb where NICKNAME ='{nickname}'")['NAME']
-            #slackにニックネームが変更されたことを通知
-            message(None, status[room], 'none', f'{name}さんがニックネームを{nickname}に変更したで')
+            if num_before==0:
+                #本名取得
+                name=update_sql(f"select * from student_tb where NICKNAME ='{nickname}'")['NAME']
+                #slackにニックネームが変更されたことを通知
+                message(None, status[room], 'none', f'{name}さんがニックネームを{nickname}に変更したで')
 
             return render_template('Result.html',
                                     result="S U C C E S S",
@@ -114,7 +116,9 @@ def regist():
                                     message1='きちんとカードが反応していないみたい',
                                     message2='それかパソリが反応していないのかな ?')                   
     except Exception as e:
-        return str(e)
+            return render_template('Result.html',
+                        result="E R R O R",
+                        message1='正しいニックネームを入力してね')  
 
 
 if __name__ == '__main__':

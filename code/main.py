@@ -117,11 +117,13 @@ def regist_UNIV(name: str, univ_id: str) -> None:
             #NICKNAMEを変更
             update_sql(f"update student_tb set NICKNAME='{nickname}' where UNIV_ID='{univ_id}'")
             result='success'
-        else:                           
+        else:                       
             #その学生証がまだデータベースに登録されていないとき
-            number=update_sql("select max(ID) from student_tb")['max(ID)']+1 #初めて登録する人にはデータベースのIDの最大値に１を足したIDを割り当てる
-            update_sql(f"insert into student_tb values('{number}', '{univ_id}', NULL, NULL, '{name}', '{nickname}', 'OUT', 'OUT')")
-            result='fir_suc'
+            if update_sql(f"select count(*) from student_tb where NICKNAME='{nickname}'")['count(*)']==0:
+                number=update_sql("select max(ID) from student_tb")['max(ID)']+1 #初めて登録する人にはデータベースのIDの最大値に１を足したIDを割り当てる
+                update_sql(f"insert into student_tb values('{number}', '{univ_id}', NULL, NULL, '{name}', '{nickname}', 'OUT', 'OUT')")
+                result='fir_suc'
+            else: result='failure'
     except: result='failure'
     finally:
         update_sql(f"update {DATA_TB} set result='{result}'")
@@ -138,7 +140,6 @@ def regist_transportation(idm: str) -> None:
         #そのニックネームの人が交通系ICカードを何枚登録しているかをカウント
         count0=int(update_sql(f"select count(TRANSPORTATION_ID1) from student_tb where NICKNAME='{nickname}'")['count(TRANSPORTATION_ID1)'])+ \
                int(update_sql(f"select count(TRANSPORTATION_ID2) from student_tb where NICKNAME='{nickname}'")['count(TRANSPORTATION_ID2)'])
-        
         #そのidmがデータベースに登録されているか否かをカウント
         count1=update_sql(f"select count(*) from student_tb where TRANSPORTATION_ID1='{idm}'")['count(*)']
         count2=update_sql(f"select count(*) from student_tb where TRANSPORTATION_ID2='{idm}'")['count(*)']
@@ -156,13 +157,12 @@ def regist_transportation(idm: str) -> None:
             update_sql(f"update student_tb set TRANSPORTATION_ID2='{idm}' where NICKNAME='{nickname}'")
 
         else:   #そのidmと結び付けられているところのnicknameを入力されたものに変える
-            try: update_sql(f"update student_tb set NICKNAME='{nickname}' where TRANSPORTATION_ID1='{idm}'")
+            try:update_sql(f"update student_tb set NICKNAME='{nickname}' where TRANSPORTATION_ID1='{idm}'")
             except: pass
             try: update_sql(f"update student_tb set NICKNAME='{nickname}' where TRANSPORTATION_ID2='{idm}'")
-            except: raise
-
+            except: #もしそのニックネームがデータベースに登録されていないものであれば例外処理にする
+                    assert update_sql(f"select count(*) from student_tb where NICKNAME='{nickname}'")['count(*)']!=0
         result='success'
-
     except: result='failure'
 
     finally:
