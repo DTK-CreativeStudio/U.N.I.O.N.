@@ -114,9 +114,12 @@ def regist_UNIV(name: str, univ_id: str) -> None:
         nickname=update_sql(f"select * from {DATA_TB}")['nickname']
         if update_sql(f"select count(*) from student_tb where UNIV_ID='{univ_id}'")['count(*)'] == 1:
             #その学生証がすでにデータベースに登録されている時
-            #NICKNAMEを変更
-            update_sql(f"update student_tb set NICKNAME='{nickname}' where UNIV_ID='{univ_id}'")
-            result='success'
+            if update_sql(f"select count(*) from student_tb where NICKNAME='{nickname}'")['count(*)'] == 0:
+                #NICKNAMEを変更
+                update_sql(f"update student_tb set NICKNAME='{nickname}' where UNIV_ID='{univ_id}'")
+                result='success'
+            #もしそのニックネームがデータベースに登録されていないものであれば例外処理にする
+            else: result='failure'
         else:                       
             #その学生証がまだデータベースに登録されていないとき
             if update_sql(f"select count(*) from student_tb where NICKNAME='{nickname}'")['count(*)']==0:
@@ -157,11 +160,13 @@ def regist_transportation(idm: str) -> None:
             update_sql(f"update student_tb set TRANSPORTATION_ID2='{idm}' where NICKNAME='{nickname}'")
 
         else:   #そのidmと結び付けられているところのnicknameを入力されたものに変える
-            try:update_sql(f"update student_tb set NICKNAME='{nickname}' where TRANSPORTATION_ID1='{idm}'")
-            except: pass
-            try: update_sql(f"update student_tb set NICKNAME='{nickname}' where TRANSPORTATION_ID2='{idm}'")
-            except: #もしそのニックネームがデータベースに登録されていないものであれば例外処理にする
-                    assert update_sql(f"select count(*) from student_tb where NICKNAME='{nickname}'")['count(*)']!=0
+            if update_sql(f"select count(*) from student_tb where NICKNAME='{nickname}'")['count(*)'] == 0:
+                try: update_sql(f"update student_tb set NICKNAME='{nickname}' where TRANSPORTATION_ID1='{idm}'")
+                except: pass
+                try: update_sql(f"update student_tb set NICKNAME='{nickname}' where TRANSPORTATION_ID2='{idm}'")
+                except: raise
+            #もしそのニックネームがデータベースに登録されていないものであれば例外処理にする
+            else: raise Exception
         result='success'
     except: result='failure'
 
