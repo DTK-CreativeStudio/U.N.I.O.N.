@@ -68,11 +68,8 @@ def regist():
 
 
         # nicknameが空でなく、ニックネームがその時点で他の人に登録されていなかった時============================
-        if nickname!="":
-            result=show_result(nickname, room)
-        else:
-            result='failure'
-
+        if nickname!="": result=show_result(nickname, room)
+        else: result='failure'
 
         # 学生証を一度登録したことがあるひとがニックネームを変えた時=====================================-----
         if result == "success":

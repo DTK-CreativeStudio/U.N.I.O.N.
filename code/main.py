@@ -112,21 +112,18 @@ def regist_UNIV(name: str, univ_id: str) -> None:
     result="NULL"
     try:
         nickname=update_sql(f"select * from {DATA_TB}")['nickname']
+        #もしそのニックネームがデータベースに既に登録されていれば例外
+        assert update_sql(f"select count(*) from student_tb where NICKNAME='{nickname}'")['count(*)']==0
         if update_sql(f"select count(*) from student_tb where UNIV_ID='{univ_id}'")['count(*)'] == 1:
             #その学生証がすでにデータベースに登録されている時
-            if update_sql(f"select count(*) from student_tb where NICKNAME='{nickname}'")['count(*)'] == 0:
-                #NICKNAMEを変更
-                update_sql(f"update student_tb set NICKNAME='{nickname}' where UNIV_ID='{univ_id}'")
-                result='success'
-            #もしそのニックネームがデータベースに登録されていないものであれば例外処理にする
-            else: result='failure'
+            #NICKNAMEを変更
+            update_sql(f"update student_tb set NICKNAME='{nickname}' where UNIV_ID='{univ_id}'")
+            result='success'
         else:                       
             #その学生証がまだデータベースに登録されていないとき
-            if update_sql(f"select count(*) from student_tb where NICKNAME='{nickname}'")['count(*)']==0:
-                number=update_sql("select max(ID) from student_tb")['max(ID)']+1 #初めて登録する人にはデータベースのIDの最大値に１を足したIDを割り当てる
-                update_sql(f"insert into student_tb values('{number}', '{univ_id}', NULL, NULL, '{name}', '{nickname}', 'OUT', 'OUT')")
-                result='fir_suc'
-            else: result='failure'
+            number=update_sql("select max(ID) from student_tb")['max(ID)']+1 #初めて登録する人にはデータベースのIDの最大値に１を足したIDを割り当てる
+            update_sql(f"insert into student_tb values('{number}', '{univ_id}', NULL, NULL, '{name}', '{nickname}', 'OUT', 'OUT')")
+            result='fir_suc'
     except: result='failure'
     finally:
         update_sql(f"update {DATA_TB} set result='{result}'")
@@ -160,13 +157,12 @@ def regist_transportation(idm: str) -> None:
             update_sql(f"update student_tb set TRANSPORTATION_ID2='{idm}' where NICKNAME='{nickname}'")
 
         else:   #そのidmと結び付けられているところのnicknameを入力されたものに変える
-            if update_sql(f"select count(*) from student_tb where NICKNAME='{nickname}'")['count(*)'] == 0:
-                try: update_sql(f"update student_tb set NICKNAME='{nickname}' where TRANSPORTATION_ID1='{idm}'")
-                except: pass
-                try: update_sql(f"update student_tb set NICKNAME='{nickname}' where TRANSPORTATION_ID2='{idm}'")
-                except: raise
-            #もしそのニックネームがデータベースに登録されていないものであれば例外処理にする
-            else: raise Exception
+            #もしそのニックネームがデータベースに既に登録されていれば例外
+            assert update_sql(f"select count(*) from student_tb where NICKNAME='{nickname}'")['count(*)'] == 0
+            try: update_sql(f"update student_tb set NICKNAME='{nickname}' where TRANSPORTATION_ID1='{idm}'")
+            except: pass
+            try: update_sql(f"update student_tb set NICKNAME='{nickname}' where TRANSPORTATION_ID2='{idm}'")
+            except: raise
         result='success'
     except: result='failure'
 
