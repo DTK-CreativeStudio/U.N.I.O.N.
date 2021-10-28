@@ -53,6 +53,11 @@ def regist():
         #入力されたニックネームをここで取得
         nickname=request.form['regist']
 
+        try: nickname.replace('\n','')
+        except: pass
+        try: nickname.replace('\r','')
+        except: pass
+
         num_before=update_sql(f"select count(*) from student_tb where NICKNAME ='{nickname}'")['count(*)']
 
         # 強制退室======================================================================--------------
